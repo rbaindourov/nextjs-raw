@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { users } from "@/lib/schema";
 import { eq } from "drizzle-orm";
+import  Stack  from "@/lib/stack";
+import  Queue  from "@/lib/queue"
 
 export async function GET() {
   try {
@@ -29,6 +31,13 @@ export async function POST(request: Request) {
       .$returningId();
     
     if (result) {
+      
+      const st = new Stack<number>();
+      const q = new Queue<number>();
+
+      st.push(result[0].id);
+      q.push(result[0].id);
+
       const [newUser] = await db.select().from(users).where(eq(users.id, result[0].id));
       return NextResponse.json(newUser, { status: 201 });
     }
