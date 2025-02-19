@@ -1,10 +1,10 @@
 // app/api/users/route.ts
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { users } from "@/lib/schema";
+import { db } from "@/lib/db/db";
+import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import  Stack  from "@/lib/stack";
-import  Queue  from "@/lib/queue"
+import Stack from "@/lib/stack";
+import Queue from "@/lib/queue";
 
 export async function GET() {
   try {
@@ -23,25 +23,27 @@ export async function POST(request: Request) {
   try {
     const { name } = await request.json();
 
-
-    const result = await db.insert(users)
+    const result = await db
+      .insert(users)
       .values({
-        name    
+        name,
       })
       .$returningId();
-    
+
     if (result) {
-      
       const st = new Stack<number>();
       const q = new Queue<number>();
 
       st.push(result[0].id);
       q.push(result[0].id);
 
-      const [newUser] = await db.select().from(users).where(eq(users.id, result[0].id));
+      const [newUser] = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, result[0].id));
       return NextResponse.json(newUser, { status: 201 });
     }
-    
+
     return NextResponse.json(
       { error: "Failed to create user - no ID returned" },
       { status: 500 }

@@ -10,6 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 
+# database schema
+/drizzle
 # testing
 /coverage
 
@@ -41,3 +43,5 @@ yarn-error.log*
 next-env.d.ts
 .idea
 .vscode
+localhost.session.sql
+pnpm-lock.yaml
