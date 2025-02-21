@@ -44,6 +44,14 @@ function stringSplit(
 
 stringSplit();
 
+const shuffleArray = <T>(array: T[]): T[] => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
 /**
  *
  * @description Splits an integer array into two arrays with random elements and calculates the sum of each array.
@@ -57,7 +65,7 @@ stringSplit();
  *   array_2 sum = 10
  */
 function integerSplit(input: number[] = [1, 2, 3, 4, 5, 6]) {
-  const random = input.sort(() => Math.random() - 0.5);
+  const random = shuffleArray(input);
   const array_1 = random.splice(0, Math.random() * random.length);
   const array_2 = random;
 
