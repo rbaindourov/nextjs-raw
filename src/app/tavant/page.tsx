@@ -1,12 +1,14 @@
 "use client";
+
 import A from "@/components/A";
 import B from "@/components/B";
 import { store } from "@/lib/store/index";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Provider } from "react-redux";
 
 function Tavant() {
   const [inputData, setInputData] = useState<string>("");
+  const disabled = useMemo(() => !inputData, [inputData]);
 
   const handleSubmit = async () => {
     const response = await Promise.all([
@@ -23,9 +25,10 @@ function Tavant() {
   return (
     <>
       <input type="text" onChange={(e) => setInputData(e.target.value)} />
-      <button disabled={!inputData} onClick={handleSubmit}>
+      <button disabled={disabled} onClick={handleSubmit}>
         Submit
       </button>
+
       <Provider store={store}>
         <A />
         <B />
