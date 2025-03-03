@@ -1,4 +1,5 @@
 type Input = (string | number)[];
+
 /**
  * @description Splits an array of mixed data types into three separate arrays: integers, strings, and special characters.
  *
@@ -14,32 +15,22 @@ type Input = (string | number)[];
 function stringSplit(
   input: Input = ["A", "B", "C", 1, 2, 3, "4", "5", 6, "@", "~", "D", "0"]
 ) {
-  const integers: number[] = input
-    .filter(
-      (item): item is number => typeof item === "number" || !isNaN(Number(item))
-    )
-    .map((item) => Number(item));
+  const isInteger = (item: string | number): item is number =>
+    !isNaN(Number(item));
 
-  const characters = input.filter(
-    (item): item is string =>
-      typeof item === "string" &&
-      item.charCodeAt(0) >= "A".charCodeAt(0) &&
-      item.charCodeAt(0) <= "Z".charCodeAt(0)
-  );
+  const isUpperCaseLetter = (item: string | number): item is string =>
+    typeof item === "string" && /^[A-Z]$/.test(item);
 
-  const special = input.filter(
-    (item): item is string =>
-      typeof item === "string" &&
-      isNaN(Number(item)) &&
-      !(
-        item.charCodeAt(0) >= "A".charCodeAt(0) &&
-        item.charCodeAt(0) <= "Z".charCodeAt(0)
-      )
-  );
+  const isSpecialCharacter = (item: string | number): item is string =>
+    typeof item === "string" && !isInteger(item) && !isUpperCaseLetter(item);
 
-  console.log(`ingteger = ${integers}`);
-  console.log(`string = ${characters}`);
-  console.log(`chars = ${special}`);
+  const integers: number[] = input.filter(isInteger).map(Number);
+  const characters: string[] = input.filter(isUpperCaseLetter);
+  const special: string[] = input.filter(isSpecialCharacter);
+
+  console.log(`integers = ${integers}`);
+  console.log(`strings = ${characters}`);
+  console.log(`specialChars = ${special}`);
 }
 
 stringSplit();
