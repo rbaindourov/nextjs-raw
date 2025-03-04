@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "@/lib/fetchData";
-import { RootState, AppDispatch } from "./store";
+import { RootState, AppDispatch } from "@/lib/store";
 
 const DataFetcher = () => {
   const dispatch = useDispatch<AppDispatch>();

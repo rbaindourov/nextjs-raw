@@ -2,9 +2,8 @@
 
 import A from "@/components/A";
 import B from "@/components/B";
-import { store } from "@/lib/store/index";
+
 import { useMemo, useState } from "react";
-import { Provider } from "react-redux";
 
 function Tavant() {
   const [inputData, setInputData] = useState<string>("");
@@ -29,10 +28,8 @@ function Tavant() {
         Submit
       </button>
 
-      <Provider store={store}>
-        <A />
-        <B />
-      </Provider>
+      <A />
+      <B />
     </>
   );
 }
