@@ -23,7 +23,10 @@ function Tavant() {
 
   return (
     <>
-      <input type="text" onChange={(e) => setInputData(e.target.value)} />
+      <input
+        type="text"
+        onChange={({ target: { value } }) => setInputData(value)}
+      />
       <button disabled={disabled} onClick={handleSubmit}>
         Submit
       </button>
