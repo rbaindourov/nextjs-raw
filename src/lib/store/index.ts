@@ -31,9 +31,6 @@ export const store = configureStore({
     month: monthSlice.reducer,
     data: dataReducer,
   },
-  preloadedState: {
-    month: initialMonthState,
-  },
 });
 
 export type AppDispatch = typeof store.dispatch;
