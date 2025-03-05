@@ -1,15 +1,22 @@
 import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
 import dataReducer from "./dataSlice";
 
-export interface State {
+export interface MonthState {
   month: string;
 }
 
-const initialState: State = { month: "Not Set" };
+export interface DataState {
+  users: { id: number; name: string }[];
+  posts: { id: number; title: string }[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialMonthState: MonthState = { month: "Not Set" };
 
 const monthSlice = createSlice({
   name: "month",
-  initialState,
+  initialState: initialMonthState,
   reducers: {
     setMonth(state, action: PayloadAction<string>) {
       state.month = action.payload;
@@ -25,7 +32,7 @@ export const store = configureStore({
     data: dataReducer,
   },
   preloadedState: {
-    month: initialState,
+    month: initialMonthState,
   },
 });
 
