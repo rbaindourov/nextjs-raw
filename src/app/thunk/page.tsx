@@ -5,10 +5,10 @@ import { RootState, AppDispatch } from "@/lib/store";
 
 const DataFetcher = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const users = useSelector((state: RootState) => state.users);
-  const posts = useSelector((state: RootState) => state.posts);
-  const loading = useSelector((state: RootState) => state.loading);
-  const error = useSelector((state: RootState) => state.error);
+  const users = useSelector((state: RootState) => state.data.users);
+  const posts = useSelector((state: RootState) => state.data.posts);
+  const loading = useSelector((state: RootState) => state.data.loading);
+  const error = useSelector((state: RootState) => state.data.error);
 
   useEffect(() => {
     dispatch(fetchData("users")); // ✅ Fetch users
