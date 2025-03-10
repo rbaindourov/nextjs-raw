@@ -35,8 +35,10 @@ function Autocomplete({ suggestions }: AutocompleteProps) {
     };
   }, []);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const userInput = event.target.value;
+  const handleChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    const userInput = value;
     setInputValue(userInput);
 
     const newFilteredSuggestions = suggestions.filter(

@@ -8,6 +8,12 @@ interface GeneralSelectProps {
   onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
+interface CertificateProps {
+  studentName: string;
+  area: string;
+  specialization: string;
+}
+
 const GeneralSelect: React.FC<GeneralSelectProps> = ({
   options,
   id,
@@ -28,13 +34,19 @@ const GeneralSelect: React.FC<GeneralSelectProps> = ({
   );
 };
 
-const Certificate = ({ studentName, area, specialization }) => {
+const Certificate: React.FC<CertificateProps> = ({
+  studentName,
+  area,
+  specialization,
+}) => {
   return (
     <div className={styles.certificate}>
       <h1>Certificate</h1>
       <p>Student Name: {studentName}</p>
-      <p>Area: {area}</p>
-      <p>Specialization: {specialization}</p>
+      <div className={styles.divider}>
+        <p>Area: {area}</p>
+        <p>Specialization: {specialization}</p>
+      </div>
     </div>
   );
 };
@@ -44,10 +56,11 @@ export default function Home() {
   const specializationOptions = ["React", "Angular", "Vue"];
 
   const [studentName, setStudentName] = useState("");
-  const [area, setArea] = useState(areaOptions.at(0));
+  const [area, setArea] = useState(areaOptions[0]);
   const [specialization, setSpecialization] = useState(
-    specializationOptions.at(0)
+    specializationOptions[0]
   );
+
   const [showCertificate, setShowCertificate] = useState(false);
   const [showError, setShowError] = useState(false);
 
@@ -63,6 +76,10 @@ export default function Home() {
         <input
           type="text"
           onChange={({ target: { value } }) => {
+            if (value === "") {
+              setShowError(true);
+              setShowCertificate(false);
+            } else if (showError) setShowError(false);
             setStudentName(value);
           }}
         />
